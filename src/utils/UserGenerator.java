@@ -76,26 +76,26 @@ public class UserGenerator {
         // Create users
         User[] users = {
             // Standard Users
-            new User("U1", "John Doe", "john", "pass123", false),
-            new User("U2", "Alice Smith", "alice", "pass123", false),
-            new User("U3", "Bob Johnson", "bob", "pass123", false),
-            new User("U4", "Emma Wilson", "emma", "pass123", false),
-            new User("U5", "Michael Brown", "michael", "pass123", false),
+            new User("U1", "John Doe", "john", "user", false),
+            new User("U2", "Alice Smith", "alice", "user", false),
+            new User("U3", "Bob Johnson", "bob", "user", false),
+            new User("U4", "Emma Wilson", "emma", "user", false),
+            new User("U5", "Michael Brown", "michael", "user", false),
             
             // Premium Users
-            new User("P1", "Jane Smith", "jane", "pass123", true),
-            new User("P2", "David Lee", "david", "123", true),
-            new User("P3", "Sarah Davis", "sarah", "pass123", true),
-            new User("P4", "James Wilson", "james", "pass123", true),
-            new User("P5", "Emily Taylor", "emily", "pass123", true),
+            new User("P1", "Jane Smith", "jane", "user", true),
+            new User("P2", "David Lee", "david", "user", true),
+            new User("P3", "Sarah Davis", "sarah", "user", true),
+            new User("P4", "James Wilson", "james", "user", true),
+            new User("P5", "Emily Taylor", "emily", "user", true),
             
             // Workers
             new Admin("W1", "Admin User", "admin", "admin"),
-            new Worker("W2", "System Manager", "manager", "manager123"),
+            new Worker("W2", "System Manager", "manager", "manager"),
             
             // Mechanics
-            new Mechanic("M1", "Mike Mechanic", "mike", "mike123"),
-            new Mechanic("M2", "Tom Technician", "tom", "tom123")
+            new Mechanic("M1", "Mike Mechanic", "mech1", "mech"),
+            new Mechanic("M2", "Tom Technician", "mech2", "mech")
         };
 
         for (User user : users) {
