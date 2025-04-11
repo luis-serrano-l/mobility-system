@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ArrayList;
 import src.controller.MobilitySystem;
 import src.model.vehicles.Vehicle;
-import src.model.Station;
+import src.model.station.Station;
 import src.model.Location;
 
 public class Mechanic extends User {

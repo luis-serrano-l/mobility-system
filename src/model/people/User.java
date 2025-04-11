@@ -8,10 +8,10 @@ import java.util.Scanner;
 import java.util.Date;
 
 import src.model.Location;
-import src.model.Trip;
+import src.model.trip.Trip;
 import src.model.vehicles.Vehicle;
 import src.model.vehicles.ElectricMotorcycle;
-import src.model.Station;
+import src.model.station.Station;
 import src.controller.MobilitySystem;
 
 public class User extends Person {

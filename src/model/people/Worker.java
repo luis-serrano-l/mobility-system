@@ -6,7 +6,7 @@ import java.util.List;
 import src.controller.MobilitySystem;
 import src.model.vehicles.Vehicle;
 import src.model.station.Station;
-import src.model.Trip;
+import src.model.trip.Trip;
 import src.model.Location;
 
 public class Worker extends User {

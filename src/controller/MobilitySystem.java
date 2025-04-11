@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.HashMap;
 import src.model.Location;
 import src.model.station.Station;
-import src.model.Trip;
+import src.model.trip.Trip;
 import src.model.people.User;
 import src.model.people.Worker;
 import src.model.people.Mechanic;

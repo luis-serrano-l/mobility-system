@@ -4,7 +4,7 @@ import src.controller.MobilitySystem;
 import src.model.people.User;
 import src.model.vehicles.Vehicle;
 import src.model.station.Station;
-import src.model.Trip;
+import src.model.trip.Trip;
 import java.io.*;
 import java.util.List;
 

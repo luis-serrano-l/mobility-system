@@ -1,8 +1,9 @@
-package src.model;
+package src.model.trip;
 
-import java.time.LocalDateTime;
+import src.model.Location;
 import src.model.vehicles.Vehicle;
 import src.model.people.User;
+import java.time.LocalDateTime;
 
 public class Trip {
     private String id;
@@ -13,7 +14,6 @@ public class Trip {
     private double cost;
     private boolean isActive;
     private LocalDateTime startTime;
-    private LocalDateTime endTime;
 
     public Trip(String id, User user, Vehicle vehicle, Location startLocation) {
         this.id = id;
@@ -24,22 +24,6 @@ public class Trip {
         this.cost = 0.0;
         this.isActive = true;
         this.startTime = LocalDateTime.now();
-    }
-
-    public void endTrip(Location endLocation) {
-        this.endLocation = endLocation;
-        this.isActive = false;
-        calculateCost();
-        this.endTime = LocalDateTime.now();
-    }
-
-    private void calculateCost() {
-        double distance = startLocation.distanceTo(endLocation);
-        double baseCost = distance * 0.50; // Base rate per km
-        if (user.isPremium()) {
-            baseCost *= 0.8; // 20% discount for premium users
-        }
-        this.cost = baseCost;
     }
 
     public String getId() {
@@ -62,12 +46,32 @@ public class Trip {
         return endLocation;
     }
 
+    public void setEndLocation(Location endLocation) {
+        this.endLocation = endLocation;
+    }
+
     public double getCost() {
         return cost;
     }
 
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
     public boolean isActive() {
         return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void endTrip(Location endLocation) {
+        this.endLocation = endLocation;
+        this.isActive = false;
+        // Calculate cost based on distance
+        double distance = startLocation.distanceTo(endLocation);
+        this.cost = distance * 0.5; // Base rate of 0.5€ per km
     }
 
     public LocalDateTime getStartTime() {
@@ -76,7 +80,10 @@ public class Trip {
 
     @Override
     public String toString() {
-        return String.format("Trip[id=%s, user=%s, vehicle=%s, start=%s, end=%s, cost=€%.2f, active=%s]",
-            id, user.getName(), vehicle.getId(), startLocation, endLocation, cost, isActive);
+        return String.format("Trip %s: %s -> %s, Cost: €%.2f",
+            id,
+            startLocation,
+            endLocation != null ? endLocation : "ongoing",
+            cost);
     }
 } 

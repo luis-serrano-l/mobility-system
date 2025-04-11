@@ -5,6 +5,9 @@ import src.model.*;
 import src.model.people.*;
 import src.model.vehicles.*;
 import src.controller.MobilitySystem;
+import src.model.station.Station;
+import src.model.trip.Trip;
+import src.model.Location;
 
 public class VWorker {
     private Worker worker;
