@@ -3,7 +3,7 @@ package src.utils;
 import src.controller.MobilitySystem;
 import src.model.people.User;
 import src.model.vehicles.Vehicle;
-import src.model.Station;
+import src.model.station.Station;
 import src.model.Trip;
 import java.io.*;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Persistence {
             for (Station station : system.getAllStations()) {
                 writer.println("STATION " + station.getId() + " " + station.getName() + " " +
                              station.getLocation().getX() + " " + station.getLocation().getY() + " " +
-                             station.getCapacity());
+                             station.getTotalSlots());
             }
 
             // Save vehicles

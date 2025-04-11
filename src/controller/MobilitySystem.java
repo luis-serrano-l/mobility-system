@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import src.model.Location;
-import src.model.Station;
+import src.model.station.Station;
 import src.model.Trip;
 import src.model.people.User;
 import src.model.people.Worker;
@@ -106,6 +106,7 @@ public class MobilitySystem {
         }
 
         trip.endTrip(endLocation);
+        trip.getVehicle().setCurrentLocation(endLocation);
         activeTrips.remove(user.getId());
         return trip.getCost();
     }
@@ -198,7 +199,7 @@ public class MobilitySystem {
     }
 
     public void saveData() {
-        // TODO: Implement data saving
+        Persistence.saveData(this);
     }
 
     public void setBaseRate(double rate) {

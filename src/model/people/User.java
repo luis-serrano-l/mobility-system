@@ -32,6 +32,12 @@ public class User extends Person {
         this.reservedVehicle = null;
     }
 
+    @Override
+    public String toString() {
+        return String.format("ID: %s, Name: %s, Username: %s, Premium: %s, Balance: %.2f€",
+            id, name, username, isPremium ? "Yes" : "No", balance);
+    }
+
     public void displayMenu() {
         System.out.println("\n=== User Menu ===");
         System.out.println("1. View Available Vehicles");

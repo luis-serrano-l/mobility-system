@@ -5,7 +5,7 @@ A Java-based platform for managing sustainable mobility in a city, including ele
 ## Project Structure
 
 ```
-movilidad-project/
+mobility-system/
 ├── src/
 │   ├── model/
 │   │   ├── User.java
@@ -17,9 +17,20 @@ movilidad-project/
 │   ├── controller/
 │   │   └── MobilitySystem.java
 │   ├── view/
+│   │   ├── VAdmin.java
+│   │   ├── VMechanic.java
+│   │   ├── VUser.java
+│   │   ├── VWorker.java
+│   │   └── VInitial.java
 │   └── utils/
+│       ├── Persistence.java
+│       └── UserGenerator.java
+├── bin/
 ├── movilidad.java
+├── movilidad.class
 ├── mock_data.txt
+├── LICENSE
+├── .gitignore
 └── README.md
 ```
 

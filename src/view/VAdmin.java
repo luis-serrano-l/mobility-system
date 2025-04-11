@@ -3,7 +3,7 @@ package src.view;
 import java.util.Scanner;
 import src.controller.MobilitySystem;
 import src.model.vehicles.Vehicle;
-import src.model.Station;
+import src.model.station.Station;
 import java.util.List;
 
 public class VAdmin {
@@ -67,12 +67,12 @@ public class VAdmin {
         
         System.out.println("\nAll Stations:");
         for (Station station : stations) {
-            System.out.printf("ID: %s, Name: %s, Location: %s, Capacity: %d, Current Occupancy: %d%n",
+            System.out.printf("ID: %s, Name: %s, Location: %s, Available Slots: %d/%d%n",
                 station.getId(),
                 station.getName(),
                 station.getLocation(),
-                station.getCapacity(),
-                station.getCurrentOccupancy());
+                station.getAvailableSlots(),
+                station.getTotalSlots());
         }
     }
 

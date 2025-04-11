@@ -19,6 +19,12 @@ public class Mechanic extends User {
     }
 
     @Override
+    public String toString() {
+        return String.format("ID: %s, Name: %s, Username: %s, Role: Mechanic, Assigned Vehicles: %d",
+            getId(), getName(), getUsername(), assignedVehicles.size());
+    }
+
+    @Override
     public void displayMenu() {
         System.out.println("\n=== Mechanic Menu ===");
         System.out.println("1. View Assigned Vehicles");

@@ -5,11 +5,12 @@ import src.controller.MobilitySystem;
 import src.model.people.User;
 import src.model.people.Worker;
 import src.model.people.Mechanic;
+import src.model.people.Admin;
 import src.model.vehicles.Vehicle;
 import src.model.vehicles.ElectricMotorcycle;
 import src.model.vehicles.Bicycle;
 import src.model.vehicles.Scooter;
-import src.model.Station;
+import src.model.station.Station;
 import src.model.Location;
 import java.util.Arrays;
 import java.util.List;
@@ -83,13 +84,13 @@ public class UserGenerator {
             
             // Premium Users
             new User("P1", "Jane Smith", "jane", "pass123", true),
-            new User("P2", "David Lee", "david", "pass123", true),
+            new User("P2", "David Lee", "david", "123", true),
             new User("P3", "Sarah Davis", "sarah", "pass123", true),
             new User("P4", "James Wilson", "james", "pass123", true),
             new User("P5", "Emily Taylor", "emily", "pass123", true),
             
             // Workers
-            new Worker("W1", "Admin User", "admin", "admin123"),
+            new Admin("W1", "Admin User", "admin", "admin"),
             new Worker("W2", "System Manager", "manager", "manager123"),
             
             // Mechanics

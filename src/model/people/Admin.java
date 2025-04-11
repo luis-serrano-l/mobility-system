@@ -6,13 +6,19 @@ import src.model.*;
 import src.controller.MobilitySystem;
 import src.model.people.User;
 import src.model.vehicles.Vehicle;
-import src.model.Station;
+import src.model.station.Station;
 import java.util.List;
 import java.util.ArrayList;
 
 public class Admin extends User {
     public Admin(String id, String name, String username, String password) {
         super(id, name, username, password, true);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %s, Name: %s, Username: %s, Role: Admin",
+            getId(), getName(), getUsername());
     }
 
     @Override
@@ -60,7 +66,12 @@ public class Admin extends User {
         List<Station> stations = system.getAllStations();
         System.out.println("\n=== All Stations ===");
         for (Station station : stations) {
-            System.out.println(station);
+            System.out.printf("ID: %s, Name: %s, Location: %s, Available Slots: %d/%d%n",
+                station.getId(),
+                station.getName(),
+                station.getLocation(),
+                station.getAvailableSlots(),
+                station.getTotalSlots());
         }
     }
 

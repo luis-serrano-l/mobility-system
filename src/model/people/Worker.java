@@ -5,13 +5,19 @@ import java.util.List;
 
 import src.controller.MobilitySystem;
 import src.model.vehicles.Vehicle;
-import src.model.Station;
+import src.model.station.Station;
 import src.model.Trip;
 import src.model.Location;
 
 public class Worker extends User {
     public Worker(String id, String name, String username, String password) {
         super(id, name, username, password, false); // Workers are not premium users
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %s, Name: %s, Username: %s, Role: Worker",
+            getId(), getName(), getUsername());
     }
 
     @Override

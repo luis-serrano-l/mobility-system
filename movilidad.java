@@ -15,6 +15,10 @@ public class movilidad {
         system = new MobilitySystem();
         scanner = new Scanner(System.in);
         
+        // Generate mock data at startup
+        UserGenerator.generateMockData(system);
+        System.out.println("Mock data generated successfully.");
+        
         while (true) {
             displayMainMenu();
             int option = scanner.nextInt();
@@ -33,8 +37,7 @@ public class movilidad {
     private static void displayMainMenu() {
         System.out.println("\n=== City Mobility System ===");
         System.out.println("1. Login");
-        System.out.println("2. Generate Mock Data");
-        System.out.println("3. Save Data");
+        System.out.println("2. Save Data");
         System.out.println("0. Exit");
         System.out.print("Enter your choice: ");
     }
@@ -45,10 +48,6 @@ public class movilidad {
                 login();
                 break;
             case 2:
-                UserGenerator.generateMockData(system);
-                System.out.println("Mock data generated successfully.");
-                break;
-            case 3:
                 system.saveData();
                 System.out.println("Data saved successfully.");
                 break;
