@@ -2,110 +2,226 @@ package src.view;
 
 import java.util.Scanner;
 import src.controller.MobilitySystem;
+import src.model.locations.Station;
 import src.model.vehicles.Vehicle;
-import src.model.station.Station;
+import src.model.vehicles.Bicycle;
+import src.model.vehicles.Motorcycle;
+import src.model.vehicles.Scooter;
+import src.model.locations.Location;
+import src.model.people.standard.StandardUser;
+import src.model.people.admin.Admin;
+
 import java.util.List;
 
 public class VAdmin {
-    private static Scanner scanner = new Scanner(System.in);
+    private MobilitySystem mobilitySystem;
+    private Admin admin;
+    private Scanner scanner;
 
-    public static void displayMenu() {
-        System.out.println("\n=== Admin Menu ===");
-        System.out.println("1. View all vehicles");
-        System.out.println("2. View all stations");
-        System.out.println("3. Charge vehicle");
-        System.out.println("4. Move vehicle");
-        System.out.println("5. Logout");
+    public VAdmin(MobilitySystem mobilitySystem, Admin admin) {
+        this.mobilitySystem = mobilitySystem;
+        this.admin = admin;
+        this.scanner = new Scanner(System.in);
     }
 
-    public static void handleOption(int option, MobilitySystem system) {
-        switch (option) {
-            case 1:
-                viewAllVehicles(system);
+    public void showAdminMenu() {
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\n=== Admin Menu ===");
+            System.out.println("1. View all vehicles");
+            System.out.println("2. View all stations");
+            System.out.println("3. View all users");
+            System.out.println("4. Add vehicle");
+            System.out.println("5. Remove vehicle");
+            System.out.println("6. Add station");
+            System.out.println("7. Remove station");
+            System.out.println("8. Update user balance");
+            System.out.println("9. Update user premium status");
+            System.out.println("10. View system statistics");
+            System.out.println("0. Logout");
+
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    viewAllVehicles();
+                    break;
+                case 2:
+                    viewAllStations();
+                    break;
+                case 3:
+                    viewAllUsers();
+                    break;
+                case 4:
+                    addVehicle();
+                    break;
+                case 5:
+                    removeVehicle();
+                    break;
+                case 6:
+                    addStation();
+                    break;
+                case 7:
+                    removeStation();
+                    break;
+                case 8:
+                    updateUserBalance();
+                    break;
+                case 9:
+                    updateUserPremiumStatus();
+                    break;
+                case 10:
+                    viewSystemStatistics();
+                    break;
+                case 0:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private void viewAllVehicles() {
+        System.out.println("\n=== All Vehicles ===");
+        for (Vehicle vehicle : mobilitySystem.getVehicles()) {
+            System.out.println(vehicle);
+        }
+    }
+
+    private void viewAllStations() {
+        System.out.println("\n=== All Stations ===");
+        for (Station station : mobilitySystem.getStations()) {
+            System.out.println(station);
+        }
+    }
+
+    private void viewAllUsers() {
+        System.out.println("\n=== All Users ===");
+        for (StandardUser user : mobilitySystem.getUsers()) {
+            System.out.println(user);
+        }
+    }
+
+    private void addVehicle() {
+        System.out.println("\n=== Add Vehicle ===");
+        System.out.print("Enter vehicle ID: ");
+        String id = scanner.nextLine();
+        System.out.print("Enter vehicle type (Bicycle/Motorcycle/Scooter): ");
+        String type = scanner.nextLine();
+        System.out.print("Enter X coordinate: ");
+        int x = scanner.nextInt();
+        System.out.print("Enter Y coordinate: ");
+        int y = scanner.nextInt();
+        System.out.print("Enter battery level: ");
+        int battery = scanner.nextInt();
+        scanner.nextLine();
+
+        Vehicle vehicle = null;
+        switch (type.toUpperCase()) {
+            case "BICYCLE":
+                vehicle = new Bicycle(id, new Location(x, y), battery);
                 break;
-            case 2:
-                viewAllStations(system);
+            case "MOTORCYCLE":
+                vehicle = new Motorcycle(id, new Location(x, y), battery, Motorcycle.MotorcycleSize.MEDIUM);
                 break;
-            case 3:
-                chargeVehicle(system);
-                break;
-            case 4:
-                moveVehicle(system);
-                break;
-            case 5:
-                System.out.println("Logging out...");
+            case "SCOOTER":
+                vehicle = new Scooter(id, new Location(x, y), battery);
                 break;
             default:
-                System.out.println("Invalid option");
+                System.out.println("Invalid vehicle type.");
+                return;
         }
+
+        mobilitySystem.addVehicle(vehicle);
+        System.out.println("Vehicle added successfully.");
     }
 
-    private static void viewAllVehicles(MobilitySystem system) {
-        List<Vehicle> vehicles = system.getAllVehicles();
-        if (vehicles.isEmpty()) {
-            System.out.println("No vehicles in the system.");
-            return;
-        }
-        
-        System.out.println("\nAll Vehicles:");
-        for (Vehicle vehicle : vehicles) {
-            System.out.printf("ID: %s, Type: %s, Battery: %.1f%%, Location: %s, Available: %s%n",
-                vehicle.getId(),
-                vehicle.getClass().getSimpleName(),
-                vehicle.getBatteryLevel(),
-                vehicle.getCurrentLocation(),
-                vehicle.isAvailable());
-        }
-    }
-
-    private static void viewAllStations(MobilitySystem system) {
-        List<Station> stations = system.getAllStations();
-        if (stations.isEmpty()) {
-            System.out.println("No stations in the system.");
-            return;
-        }
-        
-        System.out.println("\nAll Stations:");
-        for (Station station : stations) {
-            System.out.printf("ID: %s, Name: %s, Location: %s, Available Slots: %d/%d%n",
-                station.getId(),
-                station.getName(),
-                station.getLocation(),
-                station.getAvailableSlots(),
-                station.getTotalSlots());
-        }
-    }
-
-    private static void chargeVehicle(MobilitySystem system) {
+    private void removeVehicle() {
+        System.out.println("\n=== Remove Vehicle ===");
         System.out.print("Enter vehicle ID: ");
-        String vehicleId = scanner.nextLine();
-        
-        Vehicle vehicle = system.getVehicle(vehicleId);
-        if (vehicle == null) {
-            System.out.println("Vehicle not found.");
-            return;
-        }
+        String id = scanner.nextLine();
 
-        vehicle.charge();
-        System.out.println("Vehicle charged successfully.");
+        Vehicle vehicle = mobilitySystem.getVehicleById(id);
+        if (vehicle != null) {
+            mobilitySystem.removeVehicle(id);
+            System.out.println("Vehicle removed successfully.");
+        } else {
+            System.out.println("Vehicle not found.");
+        }
     }
 
-    private static void moveVehicle(MobilitySystem system) {
-        System.out.print("Enter vehicle ID: ");
-        String vehicleId = scanner.nextLine();
-        
-        Vehicle vehicle = system.getVehicle(vehicleId);
-        if (vehicle == null) {
-            System.out.println("Vehicle not found.");
-            return;
-        }
-
-        System.out.print("Enter new location (x y): ");
+    private void addStation() {
+        System.out.println("\n=== Add Station ===");
+        System.out.print("Enter station ID: ");
+        String id = scanner.nextLine();
+        System.out.print("Enter X coordinate: ");
         int x = scanner.nextInt();
+        System.out.print("Enter Y coordinate: ");
         int y = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        System.out.print("Enter capacity: ");
+        int capacity = scanner.nextInt();
+        scanner.nextLine();
 
-        vehicle.setCurrentLocation(new src.model.Location(x, y));
-        System.out.println("Vehicle moved successfully.");
+        Station station = new Station(id, new Location(x, y), capacity);
+        mobilitySystem.addStation(station);
+        System.out.println("Station added successfully.");
+    }
+
+    private void removeStation() {
+        System.out.println("\n=== Remove Station ===");
+        System.out.print("Enter station ID: ");
+        String id = scanner.nextLine();
+
+        Station station = mobilitySystem.getStationById(id);
+        if (station != null) {
+            mobilitySystem.removeStation(id);
+            System.out.println("Station removed successfully.");
+        } else {
+            System.out.println("Station not found.");
+        }
+    }
+
+    private void updateUserBalance() {
+        System.out.println("\n=== Update User Balance ===");
+        System.out.print("Enter user ID: ");
+        String id = scanner.nextLine();
+        System.out.print("Enter amount to add: ");
+        double amount = scanner.nextDouble();
+        scanner.nextLine();
+
+        StandardUser user = mobilitySystem.getUserById(id);
+        if (user != null) {
+            mobilitySystem.updateUserBalance(id, amount);
+            System.out.println("User balance updated successfully.");
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+
+    private void updateUserPremiumStatus() {
+        System.out.println("\n=== Update User Premium Status ===");
+        System.out.print("Enter user ID: ");
+        String id = scanner.nextLine();
+        System.out.print("Set premium status (true/false): ");
+        boolean isPremium = scanner.nextBoolean();
+        scanner.nextLine();
+
+        StandardUser user = mobilitySystem.getUserById(id);
+        if (user != null) {
+            mobilitySystem.updateUserPremiumStatus(id, isPremium);
+            System.out.println("User premium status updated successfully.");
+        } else {
+            System.out.println("User not found.");
+        }
+    }
+
+    private void viewSystemStatistics() {
+        System.out.println("\n=== System Statistics ===");
+        System.out.println("Total Vehicles: " + mobilitySystem.getVehicles().size());
+        System.out.println("Total Stations: " + mobilitySystem.getStations().size());
+        System.out.println("Total Users: " + mobilitySystem.getUsers().size());
     }
 } 

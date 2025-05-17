@@ -1,22 +1,20 @@
 package src.model.vehicles;
 
-import src.model.Location;
+import src.model.locations.Station;
 
-public class Scooter extends Vehicle {
-    private static final double BASE_RATE = 0.5;
-    private static final double BATTERY_CONSUMPTION_RATE = 0.3;
+public class Scooter extends Vehicle implements VehicleIF {
+    private static final double BATTERY_CONSUMPTION = 0.5; // Battery decrease percentage per minute
+    private static final double PRICE_PER_MINUTE = 1.0; // Price in euros per minute
 
-    public Scooter(String id, Location location, int batteryLevel) {
-        super(id, location, batteryLevel);
+    public Scooter(String id, Station station) {
+        super(id, station.getLocation());
     }
 
-    @Override
-    public double calculateCost(double distance) {
-        return distance * BASE_RATE;
+    public double getPricePerMinute() {
+        return PRICE_PER_MINUTE;
     }
 
-    @Override
     public double getBatteryConsumptionRate() {
-        return BATTERY_CONSUMPTION_RATE;
+        return BATTERY_CONSUMPTION;
     }
-} 
+}

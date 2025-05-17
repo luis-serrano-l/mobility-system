@@ -1,21 +1,21 @@
 package src.model.vehicles;
 
-import src.model.Location;
+import src.model.locations.Location;
 
-public class Bicycle extends Vehicle {
-    private static final double BASE_RATE = 0.3;
+public class Bicycle extends Vehicle implements VehicleIF {
 
-    public Bicycle(String id, Location location, int batteryLevel) {
-        super(id, location, batteryLevel);
+    private static final double PRICE_PER_MINUTE = 1;
+    private static final double BATTERY_CONSUMPTION_RATE = 0.05;
+
+    public Bicycle(String id, Location location) {
+        super(id, location);
     }
 
-    @Override
     public double getBatteryConsumptionRate() {
-        return 0.2; // 0.2% per kilometer
+        return BATTERY_CONSUMPTION_RATE;
     }
 
-    @Override
-    public double calculateCost(double distance) {
-        return distance * BASE_RATE;
+    public double getPricePerMinute() {
+        return PRICE_PER_MINUTE;
     }
-} 
+}

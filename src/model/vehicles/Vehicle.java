@@ -1,94 +1,55 @@
 package src.model.vehicles;
 
-import src.model.Location;
+import src.model.locations.Location;
 
-public abstract class Vehicle {
-    protected String id;
-    protected Location location;
-    protected int batteryLevel;
-    protected boolean hasIssue;
-    protected boolean isAvailable;
-    private Location currentLocation;
+public class Vehicle {
+    private Location location;
+    private double battery;
+    private boolean needsRepair;
 
-    public Vehicle(String id, Location location, int batteryLevel) {
-        this.id = id;
+    public Vehicle(Location location) {
         this.location = location;
-        this.batteryLevel = batteryLevel;
-        this.hasIssue = false;
-        this.isAvailable = true;
-    }
-
-    public String getId() {
-        return id;
+        this.needsRepair = false;
+        this.battery = 100;
     }
 
     public Location getLocation() {
         return location;
     }
 
-    public void setCurrentLocation(Location location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
-    public int getBatteryLevel() {
-        return batteryLevel;
+    public double getBattery() {
+        return battery;
     }
 
-    public void setBatteryLevel(int batteryLevel) {
-        this.batteryLevel = batteryLevel;
-    }
-
-    public boolean hasIssue() {
-        return hasIssue;
-    }
-
-    public void setHasIssue(boolean hasIssue) {
-        this.hasIssue = hasIssue;
-    }
-
-    public boolean isAvailable() {
-        return !hasIssue && batteryLevel > 20;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setBattery(double battery) {
+        this.battery = battery;
     }
 
     public void charge() {
-        this.batteryLevel = 100;
+        this.battery = 100;
     }
 
-    public abstract double calculateCost(double distance);
-    public abstract double getBatteryConsumptionRate();
-
-    @Override
-    public String toString() {
-        return String.format("ID: %s, Type: %s, Battery: %.1f%%, Location: %s, Has Issue: %s",
-            id,
-            this.getClass().getSimpleName(),
-            (float)batteryLevel,
-            location,
-            hasIssue);
+    public void useBattery(double battery) {
+        this.battery -= battery;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Vehicle other = (Vehicle) obj;
-        return id.equals(other.id);
+    public boolean needsRepair() {
+        return needsRepair;
     }
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
+    public void setNeedsRepair() {
+        this.needsRepair = true;
     }
 
-    public Location getCurrentLocation() {
-        return location;
+    public void repair() {
+        this.needsRepair = false;
     }
 
-    public void moveTo(double x, double y) {
-        this.location = new Location((int)x, (int)y);
+    public boolean hasIssue() {
+        return needsRepair;
     }
-} 
+}

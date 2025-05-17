@@ -1,85 +1,61 @@
 package src.view;
 
-import java.util.Scanner;
 import src.controller.MobilitySystem;
-import src.model.people.User;
-import src.model.people.Worker;
-import src.model.people.Mechanic;
-import src.model.people.Admin;
-import src.utils.UserGenerator;
+import src.model.people.members.Member;
+import src.view.VAdmin;
+import src.view.VWorker;
+import src.view.VMember;
+import java.util.Scanner;
 
 public class VInitial {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void displayMainMenu() {
-        System.out.println("\n=== City Mobility System ===");
-        System.out.println("1. Login");
-        System.out.println("2. Generate Mock Data");
-        System.out.println("3. Save Data");
-        System.out.println("0. Exit");
-        System.out.print("Enter your choice: ");
-    }
+    public static void main(String[] args) {
+        MobilitySystem mobilitySystem = new MobilitySystem();
+        boolean exit = false;
 
-    public static void handleMainMenuOption(int option, MobilitySystem system) {
-        switch (option) {
-            case 1:
-                login(system);
-                break;
-            case 2:
-                generateMockData(system);
-                break;
-            case 3:
-                saveData(system);
-                break;
-            default:
-                System.out.println("Invalid option. Please try again.");
-        }
-    }
+        while (!exit) {
+            System.out.println("\n=== Mobility System ===");
+            System.out.println("1. Login as admin");
+            System.out.println("2. Login as worker");
+            System.out.println("3. Login as Member");
+            System.out.println("0. Exit");
 
-    private static void login(MobilitySystem system) {
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-
-        User user = system.login(username, password);
-        if (user != null) {
-            System.out.println("Login successful!");
-            displayUserMenu(user, system);
-        } else {
-            System.out.println("Invalid credentials.");
-        }
-    }
-
-    private static void displayUserMenu(User user, MobilitySystem system) {
-        boolean loggedIn = true;
-        while (loggedIn) {
-            user.displayMenu();
             System.out.print("Enter your choice: ");
-            int option = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-            // Check for logout options for different user types
-            if ((user instanceof User && option == 0) || 
-                (user instanceof Worker && option == 4) || 
-                (user instanceof Mechanic && option == 0) || 
-                (user instanceof Admin && option == 5)) {
-                System.out.println("Logging out...");
-                loggedIn = false;
-                break;
+            switch (choice) {
+                case 1:
+                    loginAdmin(mobilitySystem);
+                    break;
+                case 2:
+                    loginWorker(mobilitySystem);
+                    break;
+                case 3:
+                    loginMember(mobilitySystem);
+                    break;
+                case 0:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
             }
-
-            user.handleOption(option, scanner, system);
         }
     }
 
-    private static void generateMockData(MobilitySystem system) {
-        UserGenerator.generateMockData(system);
-        System.out.println("Mock data generated successfully.");
+    private static void loginAdmin(MobilitySystem mobilitySystem) {
+        VAdmin adminView = new VAdmin(mobilitySystem);
+        adminView.showAdminMenu();
     }
 
-    private static void saveData(MobilitySystem system) {
-        system.saveData();
-        System.out.println("Data saved successfully.");
+    private static void loginWorker(MobilitySystem mobilitySystem) {
+        VWorker workerView = new VWorker(mobilitySystem);
+        workerView.showWorkerMenu();
     }
-} 
+
+    private static void loginMember(MobilitySystem mobilitySystem) {
+        VMember memberView = new VMember(mobilitySystem);
+        memberView.showMemberMenu();
+    }
+}

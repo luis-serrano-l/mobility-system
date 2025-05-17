@@ -10,7 +10,7 @@ mobility-system/
 │   ├── model/
 │   │   ├── User.java
 │   │   ├── Vehicle.java
-│   │   ├── ElectricMotorcycle.java
+│   │   ├── Motorcycle.java
 │   │   ├── Location.java
 │   │   ├── Station.java
 │   │   └── Trip.java
@@ -23,8 +23,7 @@ mobility-system/
 │   │   ├── VWorker.java
 │   │   └── VInitial.java
 │   └── utils/
-│       ├── Persistence.java
-│       └── UserGenerator.java
+│       └── MockGenerator.java
 ├── bin/
 ├── movilidad.java
 ├── movilidad.class

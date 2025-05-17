@@ -1,23 +1,12 @@
 package src.model.people;
 
-import java.util.Scanner;
-import src.controller.MobilitySystem;
-
-public abstract class Person {
-    protected String id;
+public class Person {
     protected String name;
     protected String username;
-    protected String password;
 
-    public Person(String id, String name, String username, String password) {
-        this.id = id;
+    public Person(String name, String username) {
         this.name = name;
         this.username = username;
-        this.password = password;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {
@@ -27,15 +16,4 @@ public abstract class Person {
     public String getUsername() {
         return username;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public abstract void displayMenu();
-    public abstract void handleOption(int option, Scanner scanner, MobilitySystem system);
 } 
