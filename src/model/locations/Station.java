@@ -65,4 +65,9 @@ public class Station extends Location {
     public int getAvailableScootersSlots() {
         return scooterCapacity - totalScooters.size();
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s at %s", name, super.toString());
+    }
 }

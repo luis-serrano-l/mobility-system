@@ -1,11 +1,13 @@
 package src.model.people.workers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import src.model.people.Person;
 import src.model.vehicles.Vehicle;
-public class Worker extends Person {
-    private ArrayList<Vehicle> assignedVehicles;
+
+public abstract class Worker extends Person {
+    private List<Vehicle> assignedVehicles;
     private boolean available;
 
     public Worker(int id, String name, String email) {
@@ -14,12 +16,14 @@ public class Worker extends Person {
         this.available = true;
     }
 
-    public ArrayList<Vehicle> getAssignedVehicles() {
-        return assignedVehicles;
+    public void assignVehicle(Vehicle vehicle) {
+        if (!assignedVehicles.contains(vehicle)) {
+            assignedVehicles.add(vehicle);
+        }
     }
 
-    public void addAssignedVehicle(Vehicle vehicle) {
-        assignedVehicles.add(vehicle);
+    public List<Vehicle> getAssignedVehicles() {
+        return new ArrayList<>(assignedVehicles);
     }
 
     public boolean isAvailable() {
@@ -31,6 +35,22 @@ public class Worker extends Person {
     }
 
     public void repairVehicle(Vehicle vehicle) {
-        vehicle.setNeedsRepair(false);
+        if (assignedVehicles.contains(vehicle)) {
+            vehicle.repair();
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Name: %s\nEmail: %s\nAssigned Vehicles:", getName(), getEmail()));
+        if (assignedVehicles.isEmpty()) {
+            sb.append("\nNone");
+        } else {
+            for (Vehicle vehicle : assignedVehicles) {
+                sb.append("\n- ").append(vehicle);
+            }
+        }
+        return sb.toString();
     }
 }

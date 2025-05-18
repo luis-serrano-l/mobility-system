@@ -54,4 +54,16 @@ public class VehiclesManager {
         }
         return null;
     }
+
+    public List<Vehicle> getAvailableVehicles() {
+        List<Vehicle> availableVehicles = new ArrayList<>();
+        for (List<Vehicle> vehicles : vehiclesByType.values()) {
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle.isAvailable() && !vehicle.needsRepair()) {
+                    availableVehicles.add(vehicle);
+                }
+            }
+        }
+        return availableVehicles;
+    }
 }

@@ -14,16 +14,17 @@ import src.model.people.workers.Mechanic;
 import src.model.people.PeopleManager;
 import src.model.locations.StationsManager;
 import src.model.vehicles.VehiclesManager;
+import src.controller.MobilitySystem;
 
 import java.util.Arrays;
 import java.util.List;
+
 public class MockGenerator {
-    public static void generateMockData() {
-        // Set city limits
-        // Create managers
-        PeopleManager peopleManager = new PeopleManager();
-        StationsManager stationsManager = new StationsManager();
-        VehiclesManager vehiclesManager = new VehiclesManager();
+    public static void generateMockData(MobilitySystem system) {
+        // Get managers from the provided MobilitySystem
+        PeopleManager peopleManager = system.getPeopleManager();
+        StationsManager stationsManager = system.getStationsManager();
+        VehiclesManager vehiclesManager = system.getVehiclesManager();
 
         // Create Admin
         Admin admin = new Admin(1, "Admin", "admin@mobility.com");
@@ -67,6 +68,14 @@ public class MockGenerator {
             vehiclesManager.addVehicle(vehicle);
         }
 
+        // Assign vehicles to workers
+        mechBoy.assignVehicle(vehicles.get(0)); // Bicycle at Edison
+        mechBoy.assignVehicle(vehicles.get(1)); // Scooter at Edison
+        mechMan.assignVehicle(vehicles.get(2)); // Small Motorcycle
+        mechPro.assignVehicle(vehicles.get(3)); // Big Motorcycle
+        fieldBoy.assignVehicle(vehicles.get(4)); // Bicycle at Bell
+        fieldBoy.assignVehicle(vehicles.get(5)); // Scooter at Bell
+
         // Create some members
         List<Member> members = Arrays.asList(
             new Member(4, "John", "john@email.com"),
@@ -77,6 +86,5 @@ public class MockGenerator {
         for (Member member : members) {
             peopleManager.addPerson(member);
         }
-
     }
 }

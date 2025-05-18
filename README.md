@@ -1,37 +1,99 @@
-# City Mobility System
+# Mobility System
 
-A Java-based platform for managing sustainable mobility in a city, including electric motorcycles, bicycles, and scooters.
+A Java-based mobility system that manages vehicles, stations, and users for a shared mobility service.
 
 ## Project Structure
 
 ```
-mobility-system/
-├── src/
-│   ├── model/
-│   │   ├── User.java
-│   │   ├── Vehicle.java
-│   │   ├── Motorcycle.java
-│   │   ├── Location.java
-│   │   ├── Station.java
-│   │   └── Trip.java
-│   ├── controller/
-│   │   └── MobilitySystem.java
-│   ├── view/
-│   │   ├── VAdmin.java
-│   │   ├── VMechanic.java
-│   │   ├── VUser.java
-│   │   ├── VWorker.java
-│   │   └── VInitial.java
-│   └── utils/
-│       └── MockGenerator.java
-├── bin/
-├── movilidad.java
-├── movilidad.class
-├── mock_data.txt
-├── LICENSE
-├── .gitignore
-└── README.md
+src/
+├── controller/
+│   └── MobilitySystem.java       # Main system controller
+├── model/
+│   ├── locations/
+│   │   ├── Location.java         # Base location class
+│   │   └── Station.java          # Station class for vehicle docking
+│   ├── people/
+│   │   ├── Person.java           # Base person class
+│   │   ├── PeopleManager.java    # Manages all people in the system
+│   │   ├── admin/
+│   │   │   └── Admin.java        # Admin user class
+│   │   ├── members/
+│   │   │   └── Member.java       # Member user class
+│   │   └── workers/
+│   │       ├── Worker.java       # Base worker class
+│   │       ├── Mechanic.java     # Mechanic worker class
+│   │       └── FieldOperator.java # Field operator worker class
+│   ├── prices/
+│   │   └── Pricing.java          # Pricing rules and calculations
+│   ├── trips/
+│   │   ├── Trip.java            # Trip class
+│   │   └── TripsManager.java    # Manages all trips
+│   └── vehicles/
+│       ├── Vehicle.java         # Base vehicle class
+│       ├── VehiclesManager.java # Manages all vehicles
+│       ├── Bicycle.java         # Bicycle vehicle class
+│       ├── Scooter.java         # Scooter vehicle class
+│       ├── SmallMotorcycle.java # Small motorcycle class
+│       └── BigMotorcycle.java   # Big motorcycle class
+├── utils/
+│   └── MockGenerator.java       # Generates mock data for testing
+├── view/
+│   ├── VAdmin.java             # Admin view
+│   ├── VInitial.java           # Initial view/menu
+│   ├── VMember.java            # Member view
+│   └── VWorker.java            # Worker view
+└── movilidad.java              # Main application entry point
 ```
+
+## Key Features
+
+### Vehicle Management
+- Support for different vehicle types (Bicycles, Scooters, Motorcycles)
+- Vehicle status tracking (battery, repair needs, location)
+- Vehicle assignment to workers
+
+### Station Management
+- Station capacity management
+- Location tracking
+- Support for different vehicle types
+
+### User Management
+- Different user roles (Admin, Member, Worker)
+- Worker types (Mechanic, Field Operator)
+- Balance management for members
+
+### Trip Management
+- Trip creation and tracking
+- Cost calculation based on duration and vehicle type
+- Location validation
+- Balance checks
+
+### Worker Operations
+- Vehicle repair
+- Vehicle movement
+- Assignment management
+
+### Member Operations
+- Trip booking
+- Balance management
+- Vehicle issue reporting
+
+## Usage
+
+1. Compile the project:
+```bash
+javac -d bin src/**/*.java src/movilidad.java
+```
+
+2. Run the application:
+```bash
+java -cp bin src/movilidad
+```
+
+3. Login as:
+   - Admin: Manage system, view reports
+   - Worker: Handle vehicle maintenance and movement
+   - Member: Book trips and manage account
 
 ## Features
 
@@ -108,3 +170,4 @@ mobility-system/
 - Mock data includes sample stations, vehicles, and users
 - Vehicle locations are tracked in real-time
 - Stations have limited capacity for vehicle storage 
+

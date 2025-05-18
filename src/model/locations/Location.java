@@ -30,4 +30,9 @@ public class Location {
         double distanceY = this.y - other.getY();
         return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
     }
+
+    @Override
+    public String toString() {
+        return String.format("(%.1f, %.1f)", x, y);
+    }
 }

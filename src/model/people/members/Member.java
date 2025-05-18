@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import src.model.people.Person;
 import src.model.trips.Trip;
 import src.model.vehicles.Vehicle;
+import src.model.vehicles.Scooter;
+import src.model.vehicles.Bicycle;
 
 public class Member extends Person {
     private double balance;
@@ -13,7 +15,7 @@ public class Member extends Person {
     private int id;
 
     public Member(int id, String name, String email) {
-        super(name, email);
+        super(id, name, email);
         this.balance = 0.0;
         this.tripHistory = new ArrayList<>();
         this.isPremium = false;
@@ -44,15 +46,51 @@ public class Member extends Person {
         return isPremium;
     }
 
-    public void canPromoteToPremium() {
-        // TODO: Implement this method
+    public ArrayList<Trip> getTripHistory() {
+        return tripHistory;
+    }
+
+    public boolean canPromoteToPremium() {
+        // Check if member has used any vehicle at least 15 times
+        if (tripHistory.size() >= 15) {
+            return true;
+        }
+
+        // Check if member has used vehicles at least 30 times total
+        if (tripHistory.size() >= 30) {
+            return true;
+        }
+
+        // Check if member has used all vehicle types
+        boolean hasUsedScooter = false;
+        boolean hasUsedBicycle = false;
+        boolean hasUsedMotorcycle = false;
+        
+        for (Trip trip : tripHistory) {
+            Vehicle vehicle = trip.getVehicle();
+            if (vehicle instanceof Scooter) {
+                hasUsedScooter = true;
+            } else if (vehicle instanceof Bicycle) {
+                hasUsedBicycle = true; 
+            } else { // Must be motorcycle
+                hasUsedMotorcycle = true;
+            }
+        }
+        
+        boolean allTypesUsed = hasUsedScooter && hasUsedBicycle && hasUsedMotorcycle;
+        
+        return allTypesUsed;
     }
 
     public void setPremium(boolean premium) {
         this.isPremium = premium;
     }
 
-    public void reportVehicleIssue(Vehicle vehicle) {
-        vehicle.setNeedsRepair(true);
+    public void reportVehicleIssue(Vehicle vehicle, int issueType) {
+        if (issueType == 1) {
+            vehicle.setNeedsRepair(true);
+        } else if (issueType == 2) {
+            vehicle.setBatteryDamaged(true);
+        }
     }
 }

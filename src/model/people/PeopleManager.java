@@ -44,6 +44,7 @@ public class PeopleManager {
         for (List<Person> people : peopleByType.values()) {
             for (Person person : people) {
                 if (person instanceof Worker && person.getName().equals(name)) {
+                    return (Worker) person;
                 }
             }
         }

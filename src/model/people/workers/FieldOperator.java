@@ -12,8 +12,8 @@ public class FieldOperator extends Worker {
     }
 
     public void fixVehicle(Vehicle vehicle) {
-        vehicle.setNeedsRepair(false);
-        System.out.println("Vehicle fixed successfully!");
+        vehicle.setBatteryDamaged(false);
+        System.out.println("Vehicle battery fixed successfully!");
     }
 
     public ArrayList<Vehicle> getAssignedVehicles() {
