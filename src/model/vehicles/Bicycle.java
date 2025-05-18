@@ -1,21 +1,20 @@
 package src.model.vehicles;
 
-import src.model.locations.Location;
+import src.model.locations.Station;
 
-public class Bicycle extends Vehicle implements VehicleIF {
+public class Bicycle extends Vehicle {
+    private Station station;
 
-    private static final double PRICE_PER_MINUTE = 1;
-    private static final double BATTERY_CONSUMPTION_RATE = 0.05;
-
-    public Bicycle(String id, Location location) {
-        super(id, location);
+    public Bicycle(int id, Station station) {
+        super(id, station);
+        this.station = station;
     }
 
-    public double getBatteryConsumptionRate() {
-        return BATTERY_CONSUMPTION_RATE;
+    public Station getLocation() {
+        return station;
     }
 
-    public double getPricePerMinute() {
-        return PRICE_PER_MINUTE;
+    public void setLocation(Station station) {
+        this.station = station;
     }
 }

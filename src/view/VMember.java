@@ -1,28 +1,43 @@
 package src.view;
 
-import src.controller.MobilitySystem;
-import src.model.people.standard.StandardUser;
 import src.model.vehicles.Vehicle;
+import src.model.vehicles.VehiclesManager;
+import src.model.vehicles.Scooter;
+import src.model.vehicles.Bicycle;
 import src.model.locations.Location;
+import src.model.people.members.Member;
+import src.model.people.PeopleManager;
 import src.model.trips.Trip;
-
+import src.model.locations.StationsManager;
+import src.model.locations.Station;
+import java.util.List;
 import java.util.Scanner;
 
-public class VStandardUser {
-    private MobilitySystem mobilitySystem;
-    private StandardUser user;
+public class VMember {
     private Scanner scanner;
+    private VehiclesManager vehiclesManager;
+    private StationsManager stationsManager;
 
-    public VStandardUser(MobilitySystem mobilitySystem, StandardUser user) {
-        this.mobilitySystem = mobilitySystem;
-        this.user = user;
+    public VMember() {
         this.scanner = new Scanner(System.in);
+        this.vehiclesManager = new VehiclesManager();
+        this.stationsManager = new StationsManager();
     }
 
-    public void showUserMenu() {
+    public void showMemberMenu() {
         boolean exit = false;
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+        PeopleManager peopleManager = new PeopleManager();
+        Member member = peopleManager.getMemberByName(name);
+
+        if (member == null) {
+            System.out.println("Person not found or not a member. Please try again.");
+            return;
+        }
+
         while (!exit) {
-            System.out.println("\n=== User Menu ===");
+            System.out.println("\n=== Member Menu ===");
             System.out.println("1. View available vehicles");
             System.out.println("2. Start trip");
             System.out.println("3. View trip history");
@@ -65,50 +80,67 @@ public class VStandardUser {
 
     private void viewAvailableVehicles() {
         System.out.println("\n=== Available Vehicles ===");
-        for (Vehicle vehicle : mobilitySystem.getVehicles()) {
-            if (vehicle.isAvailable() && !vehicle.needsRepair() && user.canReserveVehicle(vehicle)) {
-                System.out.println(vehicle);
-            }
+        for (Vehicle vehicle : vehiclesManager.getAllAvailableVehicles()) {
+            System.out.println("Vehicle ID: " + vehicle.getId());
+            System.out.println("Type: " + vehicle.getClass().getSimpleName());
+            System.out.println("Location: " + vehicle.getLocation());
+            System.out.println("Battery Level: " + vehicle.getBattery() + "%");
+            System.out.println("-------------------");
         }
     }
 
     private void startTrip() {
         System.out.println("\n=== Start Trip ===");
         System.out.print("Enter vehicle ID: ");
-        String vehicleId = scanner.nextLine();
+        int vehicleId = scanner.nextInt();
+        scanner.nextLine();
 
-        Vehicle vehicle = mobilitySystem.getVehicleById(vehicleId);
-        if (vehicle == null) {
-            System.out.println("Vehicle not found.");
-            return;
-        }
-
-        System.out.print("Enter trip duration (minutes): ");
+        System.out.print("Enter trip duration (seconds): ");
         int duration = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Enter destination (x y): ");
-        int x = scanner.nextInt();
-        int y = scanner.nextInt();
-        scanner.nextLine();
+        int x, y;
+        Vehicle vehicle = vehiclesManager.getVehicleById(vehicleId);
+        if (vehicle instanceof Scooter || vehicle instanceof Bicycle) {
+            System.out.println("\nAvailable Stations:");
+            List<Station> stations = stationsManager.getAllStations();
+            for (int i = 0; i < stations.size(); i++) {
+                Station station = stations.get(i);
+                System.out.println((i+1) + ". " + station.getName() + " (" + 
+                                 station.getLocation().getX() + "," + 
+                                 station.getLocation().getY() + ")");
+            }
+            System.out.print("Choose station number: ");
+            int stationNum = scanner.nextInt();
+            scanner.nextLine();
+            Station selectedStation = stations.get(stationNum - 1);
+            x = selectedStation.getLocation().getX();
+            y = selectedStation.getLocation().getY();
+        } else {
+            System.out.print("Enter destination x coordinate: ");
+            x = scanner.nextInt();
+            System.out.print("Enter destination y coordinate: ");
+            y = scanner.nextInt();
+            scanner.nextLine();
+        }
         Location destination = new Location(x, y);
 
-        Trip trip = new Trip(vehicle, user, vehicle.getLocation(), destination);
+        Trip trip = new Trip(vehicle, member, vehicle.getLocation(), destination);
         mobilitySystem.addTrip(trip);
         vehicle.setLocation(destination);
-        user.addTrip(trip);
+        member.addTrip(trip);
     }
 
     private void viewTripHistory() {
         System.out.println("\n=== Trip History ===");
-        for (Trip trip : user.getTripHistory()) {
+        for (Trip trip : member.getTripHistory()) {
             System.out.println(trip);
         }
     }
 
     private void viewBalance() {
         System.out.println("\n=== Current Balance ===");
-        System.out.println("Balance: " + user.getBalance());
+        System.out.println("Balance: " + member.getBalance());
     }
 
     private void addBalance() {
@@ -117,7 +149,7 @@ public class VStandardUser {
         double amount = scanner.nextDouble();
         scanner.nextLine();
 
-        user.addBalance(amount);
+        member.addBalance(amount);
         System.out.println("Balance added successfully.");
     }
 
@@ -135,8 +167,7 @@ public class VStandardUser {
         System.out.print("Enter issue description: ");
         String description = scanner.nextLine();
 
-        user.reportVehicleIssue(vehicle, description);
+        member.reportVehicleIssue(vehicle, description);
         System.out.println("Issue reported successfully.");
     }
 }
-

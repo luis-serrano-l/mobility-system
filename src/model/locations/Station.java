@@ -7,17 +7,23 @@ import src.model.vehicles.Bicycle;
 import src.model.vehicles.Scooter;
 
 public class Station extends Location {
-    private final int bicycleCapacity;
-    private final int scooterCapacity;
-    private final ArrayList<Vehicle> totalBycicles;
-    private final ArrayList<Vehicle> totalScooters;
+    private String name;
+    private int bicycleCapacity;
+    private int scooterCapacity;
+    private ArrayList<Vehicle> totalBycicles;
+    private ArrayList<Vehicle> totalScooters;
 
-    public Station(double x, double y, int bicycleCapacity, int scooterCapacity) {
+    public Station(double x, double y, String name, int bicycleCapacity, int scooterCapacity) {
         super(x, y);
+        this.name = name;
         this.bicycleCapacity = bicycleCapacity;
         this.scooterCapacity = scooterCapacity;
         this.totalBycicles = new ArrayList<>();
         this.totalScooters = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getBicycleCapacity() {

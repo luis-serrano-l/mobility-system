@@ -3,18 +3,14 @@ package src.model.vehicles;
 import src.model.locations.Location;
 
 public interface VehicleIF {
-    String getId();
+    int getId();
     Location getLocation();
     void setLocation(Location location);
     double getBattery();
     void setBattery(double battery);
     boolean needsRepair();
-    void setNeedsRepair();
-    void repair();
+    void setNeedsRepair(boolean needsRepair);
     boolean hasIssue();
-    boolean needsStation();
-    Location getCurrentLocation();
-    void setCurrentLocation(Location location);
-    double getPricePerMinute();
-    double getBatteryConsumptionRate();
+    boolean batteryDamaged();
+    void setBatteryDamaged(boolean batteryDamaged);
 }

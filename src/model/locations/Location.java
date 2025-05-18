@@ -1,42 +1,33 @@
 package src.model.locations;
 
 public class Location {
-    private double latitude;
-    private double longitude;
+    private double x;
+    private double y;
 
-    public Location(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Location(double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public int getX() {
+        return (int) x;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setX(double x) {
+        this.x = x;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public int getY() {
+        return (int) y;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setY(int y) {
+        this.y = y;
     }
 
     public double distanceTo(Location other) {
-        // Simple Euclidean distance for demonstration
-        double dx = this.latitude - other.latitude;
-        double dy = this.longitude - other.longitude;
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    @Override
-    public String toString() {
-        return "Location{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+        double distanceX = this.x - other.getX();
+        double distanceY = this.y - other.getY();
+        return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
     }
 }

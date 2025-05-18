@@ -1,4 +1,4 @@
-package src.model.people.standard;
+package src.model.people.members;
 
 import java.util.ArrayList;
 
@@ -6,18 +6,22 @@ import src.model.people.Person;
 import src.model.trips.Trip;
 import src.model.vehicles.Vehicle;
 
-public class StandardUser extends Person {
+public class Member extends Person {
     private double balance;
     private ArrayList<Trip> tripHistory;
     private boolean isPremium;
-    private double discountRate;
+    private int id;
 
-    public StandardUser(String name, String username, boolean isPremium) {
-        super(name, username);
+    public Member(int id, String name, String email) {
+        super(name, email);
         this.balance = 0.0;
         this.tripHistory = new ArrayList<>();
-        this.isPremium = isPremium;
-        this.discountRate = isPremium ? 0.2 : 0.0;
+        this.isPremium = false;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public double getBalance() {
@@ -28,12 +32,8 @@ public class StandardUser extends Person {
         this.balance += amount;
     }
 
-    public boolean deductBalance(double amount) {
-        if (this.balance >= amount) {
-            this.balance -= amount;
-            return true;
-        }
-        return false;
+    public void deductBalance(double amount) {
+        this.balance -= amount;
     }
 
     public void addTrip(Trip trip) {
@@ -44,16 +44,15 @@ public class StandardUser extends Person {
         return isPremium;
     }
 
-    public void setPremium(boolean premium) {
-        this.isPremium = premium;
-        this.discountRate = premium ? 0.2 : 0.0;
+    public void canPromoteToPremium() {
+        // TODO: Implement this method
     }
 
-    public double getDiscountRate() {
-        return discountRate;
+    public void setPremium(boolean premium) {
+        this.isPremium = premium;
     }
 
     public void reportVehicleIssue(Vehicle vehicle) {
-        vehicle.setNeedsRepair();
+        vehicle.setNeedsRepair(true);
     }
-} 
+}

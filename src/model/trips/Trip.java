@@ -2,36 +2,30 @@ package src.model.trips;
 
 import src.model.vehicles.Vehicle;
 import src.model.vehicles.VehicleIF;
-import src.model.people.standard.StandardUser;
 import src.model.locations.Location;
+import src.model.people.members.Member;
 
 public class Trip {
     private Vehicle vehicle;
-    private StandardUser user;
-    private Location startLocation;
+    private Member member;
     private Location endLocation;
     private double cost;
     private int duration;
 
-    public Trip(Vehicle vehicle, StandardUser user, Location startLocation, Location endLocation, int duration) {
+    public Trip(Vehicle vehicle, Member member, Location endLocation, int duration) {
         this.vehicle = vehicle;
-        this.user = user;
-        this.startLocation = startLocation;
+        this.member = member;
         this.endLocation = endLocation;
         this.duration = duration;
-        this.cost = vehicle.getPricePerMinute() * duration;
+        this.cost = ((VehicleIF)vehicle).getPricePerMinute() * duration;
     }
 
     public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public StandardUser getUser() {
-        return user;
-    }
-
-    public Location getStartLocation() {
-        return startLocation;
+    public Member getMember() {
+        return member;
     }
 
     public Location getEndLocation() {
@@ -40,5 +34,13 @@ public class Trip {
 
     public int getDuration() {
         return duration;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public double getBatteryConsumption() {
+        return ((VehicleIF)vehicle).getBatteryConsumptionRate() * duration;
     }
 }

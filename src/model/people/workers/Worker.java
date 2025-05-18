@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import src.model.people.Person;
 import src.model.vehicles.Vehicle;
 public class Worker extends Person {
-    private String name;
-    private String email;
     private ArrayList<Vehicle> assignedVehicles;
+    private boolean available;
 
     public Worker(int id, String name, String email) {
-        super(name, email);
-        this.id = id;
+        super(id, name, email);
         this.assignedVehicles = new ArrayList<>();
+        this.available = true;
     }
 
     public ArrayList<Vehicle> getAssignedVehicles() {
@@ -23,15 +22,15 @@ public class Worker extends Person {
         assignedVehicles.add(vehicle);
     }
 
-    public void takeVehicle(Vehicle vehicle) {
-        vehicle.setAvailable(false);
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void returnVehicle(Vehicle vehicle) {
-        vehicle.setAvailable(true);
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     public void repairVehicle(Vehicle vehicle) {
-        vehicle.repair();
+        vehicle.setNeedsRepair(false);
     }
 }

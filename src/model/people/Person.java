@@ -1,19 +1,39 @@
 package src.model.people;
 
-public class Person {
+public abstract class Person {
     protected String name;
-    protected String username;
+    protected String email;
+    protected boolean isActive;
+    protected int id;
 
-    public Person(String name, String username) {
+    public Person(int id, String name, String email) {
+        this.id = id;
         this.name = name;
-        this.username = username;
+        this.email = email;
+        this.isActive = true;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
-} 
+
+    public boolean isValidEmail(String email) {
+        return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    }
+    
+    public boolean isActive() {
+        return isActive;
+    }
+    
+    public void setActiveStatus(boolean isActive) {
+        this.isActive = isActive;
+    }
+}
